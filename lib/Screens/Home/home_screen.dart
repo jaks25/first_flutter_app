@@ -15,8 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   double yOffset = 0;
   double scaleFactor = 1;
 
-  bool isDrawerOpen = false;
-  bool isSelected   = true;
+  bool isDrawerOpen  = false;
+  bool isSelected    = true;
+  int  indexSelected = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -87,33 +88,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: size.height*0.15,
-                          width: size.width*0.19,
-                          padding: EdgeInsets.all(size.aspectRatio*1),
-                          margin: EdgeInsets.only(left: 20),
-                          decoration: isSelected ? BoxDecoration(
-                            color: kHomeBox,
-                            boxShadow: shadowList,
-                            borderRadius: BorderRadius.circular(10),
-                          ):
-                          BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Image.asset(categories[index]['iconPath']),
-                        ),
-                        Text(
-                            '    ' + categories[index]['name'],
-                            textAlign: TextAlign.center,
-                        )
-                      ],
-                    )
-
+                  return InkWell(
+                      child: Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: size.height*0.15,
+                                width: size.width*0.19,
+                                padding: EdgeInsets.all(size.aspectRatio*1),
+                                margin: EdgeInsets.only(left: 20),
+                                decoration: isSelected && index == indexSelected ? BoxDecoration(
+                                  color: kHomeBox,
+                                  boxShadow: shadowList,
+                                  borderRadius: BorderRadius.circular(10),
+                                ):
+                                BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: shadowList,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Image.asset(categories[index]['iconPath']),
+                              ),
+                              Text(
+                                  '    ' + categories[index]['name'],
+                                  textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )
+                      ),
+                      onTap: () {
+                        setState(() {
+                          indexSelected = index;
+                        });
+                        print('    ' + categories[index]['name'] + 'was clicked');
+                      },
                   );
                 },
               ),
@@ -137,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: EdgeInsets.only(top: size.height*0.04, bottom: size.height*0.2),
                         ),
                         Align(
-                          child: Image.asset('assets/images/cat_image.png',
+                          child: Image.asset(categories[indexSelected]['picturePath'],
                             height: size.height * 0.29,
                             width:  size.width * 0.29,
                           ),
@@ -155,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget> [
                           RoundedInputField(
-                            hintText: "Imię kota",
-                            icon: Icons.pest_control_rodent,
+                            hintText: categories[indexSelected]['hintText'] ?? "Imię",
+                            icon: categories[indexSelected]['iconInputField'] ?? Icons.accessibility_new_rounded,
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 4,
