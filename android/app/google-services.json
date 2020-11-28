@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "665644757105",
+    "firebase_url": "https://vet-app-serverless.firebaseio.com",
+    "project_id": "vet-app-serverless",
+    "storage_bucket": "vet-app-serverless.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665644757105:android:0df5498059b8e1539e6bd0",
+        "android_client_info": {
+          "package_name": "com.example.first_flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665644757105-shngek7beej9d4n6u4o5hke3tc4m6fo6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.first_flutter_app",
+            "certificate_hash": "a789e505c817a122ea906ea6eaa3d48b3a30ab18"
+          }
+        },
+        {
+          "client_id": "665644757105-aagbkrlj99eg66vs0mp5mgq0r5khopqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYyDpXUuFtGlyJdLAy_pKP1F1VLHsQwbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665644757105-aagbkrlj99eg66vs0mp5mgq0r5khopqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
