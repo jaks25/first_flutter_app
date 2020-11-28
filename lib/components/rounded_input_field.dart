@@ -8,6 +8,7 @@ class RoundedInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final TextEditingController fieldController;
   final Color color, textColor, iconColor;
+  final double verticalMargin;
 
   const RoundedInputField({
     Key key,
@@ -17,7 +18,8 @@ class RoundedInputField extends StatelessWidget {
     this.fieldController,
     this.color = kPrimaryColor,
     this.textColor = kPrimaryLightColor,
-    this.iconColor = kPrimaryLightColor
+    this.iconColor = kPrimaryLightColor,
+    this.verticalMargin,
   }) : super(key: key);
 
 
@@ -40,6 +42,7 @@ class RoundedInputField extends StatelessWidget {
         ),
       ),
       color: color,
+      verticalMargin: verticalMargin,
     );
   }
 }

@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fonts/AppIcons.ttf
   #   - images/a_dot_ham.jpeg
 
 

@@ -14,10 +14,10 @@ List<BoxShadow> shadowList = [
 ];
 
 List<Map> categories = [
-  {'name': 'Cat', 'iconPath': 'assets/images/cat.png'},
-  {'name': 'Dog', 'iconPath': 'assets/images/dog.png'},
-  {'name': 'Bunnie', 'iconPath': 'assets/images/rabbit.png'},
-  {'name': 'Pig', 'iconPath': 'assets/images/pig.png'},
-  {'name': 'Horse', 'iconPath': 'assets/images/horse.png'},
-  {'name': 'Cow', 'iconPath': 'assets/images/cow.png'},
+  {'name': 'Kot', 'iconPath': 'assets/images/cat.png'},
+  {'name': 'Pies', 'iconPath': 'assets/images/dog.png'},
+  {'name': 'Królik', 'iconPath': 'assets/images/rabbit.png'},
+  {'name': 'Świnia', 'iconPath': 'assets/images/pig.png'},
+  {'name': 'Koń', 'iconPath': 'assets/images/horse.png'},
+  {'name': 'Krowa', 'iconPath': 'assets/images/cow.png'},
 ];

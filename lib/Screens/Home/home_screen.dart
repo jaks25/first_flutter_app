@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:first_flutter_app/constants.dart';
 import 'package:first_flutter_app/Screens/Home/components/body.dart';
 import 'package:first_flutter_app/components/rounded_input_field.dart';
+import 'package:first_flutter_app/Screens/Home/components/app_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
+  bool isSelected   = true;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.search),
-                  Text('Search pet to diagnose'),
+                  Text('Wybierz gatunek'),
                   Icon(Icons.settings)
                 ],
               ),
@@ -93,14 +95,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: size.width*0.19,
                           padding: EdgeInsets.all(size.aspectRatio*1),
                           margin: EdgeInsets.only(left: 20),
-                          decoration: BoxDecoration(
+                          decoration: isSelected ? BoxDecoration(
+                            color: kHomeBox,
+                            boxShadow: shadowList,
+                            borderRadius: BorderRadius.circular(10),
+                          ):
+                          BoxDecoration(
                             color: Colors.white,
                             boxShadow: shadowList,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.asset(categories[index]['iconPath']),
                         ),
-                        Text(categories[index]['name'])
+                        Text(
+                            '    ' + categories[index]['name'],
+                            textAlign: TextAlign.center,
+                        )
                       ],
                     )
 
@@ -111,11 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
             //Description of patient
             Container(
               height: size.height * 0.5,
-              margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              margin: EdgeInsets.symmetric(horizontal: size.width * 0.02),
               child: Row(
                 children: [
                   Expanded(
-                    flex: 1,
+
                     child: Stack(
                       children: [
                         Container(
@@ -124,43 +134,67 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: shadowList,
                           ),
-                          margin: EdgeInsets.only(top: size.height*0.04, bottom: size.height*0.04),
+                          margin: EdgeInsets.only(top: size.height*0.04, bottom: size.height*0.2),
                         ),
                         Align(
                           child: Image.asset('assets/images/cat_image.png',
-                            height: size.height * 0.45,
-                            width:  size.width * 0.45,
+                            height: size.height * 0.29,
+                            width:  size.width * 0.29,
                           ),
-                          alignment: Alignment(0, -size.height * 0.002),
+                          alignment: Alignment(-0.4, -size.height * 0.0013),
                           //left: size.width * 0.03,
                         ),
                       ],
                     ),
                   ),
                   Expanded(
+                    flex: 3,
                     child: Container(
-                      margin: EdgeInsets.only(top:size.height*0.07, bottom: size.height*0.07),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: shadowList,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20)
-                        ),
-                      ),
+                      margin: EdgeInsets.only(top:size.height*0.01, bottom: size.height*0.0001, left: size.width * 0.00001),
+                      color: Colors.grey[200],
                       child: Column(
                         children: <Widget> [
                           RoundedInputField(
-                            hintText: "Imię",
-                            icon: Icons.android,
-                            color: Colors.grey[200],
+                            hintText: "Imię kota",
+                            icon: Icons.pest_control_rodent,
+                            color: Colors.white,
                             iconColor: Colors.black,
+                            verticalMargin: 4,
                           ),
                           RoundedInputField(
                             hintText: "Nazwisko właściciela",
                             icon: Icons.person,
-                            color: Colors.grey[200],
+                            color: Colors.white,
                             iconColor: Colors.black,
+                            verticalMargin: 4,
+                          ),
+                          RoundedInputField(
+                            hintText: "Wiek",
+                            icon: Icons.calendar_today,
+                            color: Colors.white,
+                            iconColor: Colors.black,
+                            verticalMargin: 4,
+                          ),
+                          RoundedInputField(
+                            hintText: "Waga",
+                            icon: Icons.network_check,
+                            color: Colors.white,
+                            iconColor: Colors.black,
+                            verticalMargin: 4,
+                          ),
+                          RoundedInputField(
+                            hintText: "Płeć",
+                            icon: Icons.looks_two_outlined,
+                            color: Colors.white,
+                            iconColor: Colors.black,
+                            verticalMargin: 4,
+                          ),
+                          RoundedInputField(
+                            hintText: "Rasa",
+                            icon: Icons.loyalty_outlined,
+                            color: Colors.white,
+                            iconColor: Colors.black,
+                            verticalMargin: 4,
                           ),
                         ]
                       )
