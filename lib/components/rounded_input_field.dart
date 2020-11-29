@@ -19,7 +19,7 @@ class RoundedInputField extends StatelessWidget {
     this.color = kPrimaryColor,
     this.textColor = kPrimaryLightColor,
     this.iconColor = kPrimaryLightColor,
-    this.verticalMargin,
+    this.verticalMargin = 10,
   }) : super(key: key);
 
 

@@ -4,6 +4,8 @@ import 'package:first_flutter_app/constants.dart';
 import 'package:first_flutter_app/Screens/Home/components/body.dart';
 import 'package:first_flutter_app/components/rounded_input_field.dart';
 import 'package:first_flutter_app/Screens/Home/components/app_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:first_flutter_app/globals.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -61,7 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           isDrawerOpen = true;
                         });
                       print("Pushed");
-                    },)
+                    },
+                    ),
+                    Text(
+                        currentUserEmail
+                    ),
+                    SvgPicture.network("https://www.svgrepo.com/show/295861/veterinarian.svg",
+                      height: size.height * 0.07,
+                      alignment: Alignment.center,
+                    ),
+                    //SizedBox(height: size.height * 0.03,width: size.width * 0.1,),
                   ],
                 )
             ),
@@ -120,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           indexSelected = index;
                         });
-                        print('    ' + categories[index]['name'] + 'was clicked');
+                        print('    ' + categories[index]['name'] + ' was clicked');
                       },
                   );
                 },
@@ -133,8 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   Expanded(
-
-                    child: Stack(
+                    child: Column(
+                    children: <Widget> [
+                      Expanded(
+                      child: Stack(
                       children: [
                         Container(
                           decoration: BoxDecoration(
@@ -142,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: shadowList,
                           ),
-                          margin: EdgeInsets.only(top: size.height*0.04, bottom: size.height*0.2),
+                          margin: EdgeInsets.only(top: size.height*0.0001, bottom: size.height*0.0001),
                         ),
                         Align(
                           child: Image.asset(categories[indexSelected]['picturePath'],
@@ -154,11 +167,34 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: kHomeBox,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: shadowList,
+                              ),
+                              margin: EdgeInsets.only(top: size.height*0.05, bottom: size.height*0.05),
+                            ),
+                          ],
+                        ),
+                          onTap: () {
+                            print('button clicked');
+                          },
+                        ),
+                      ),
+                    ]
+                    )
                   ),
                   Expanded(
                     flex: 3,
+                    child: SingleChildScrollView(
                     child: Container(
-                      margin: EdgeInsets.only(top:size.height*0.01, bottom: size.height*0.0001, left: size.width * 0.00001),
+                      margin: EdgeInsets.only(top:size.height*0.01, bottom: size.height*0.000001, left: size.width * 0.00001),
                       color: Colors.grey[200],
                       child: Column(
                         children: <Widget> [
@@ -167,51 +203,52 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: categories[indexSelected]['iconInputField'] ?? Icons.accessibility_new_rounded,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                           RoundedInputField(
                             hintText: "Nazwisko właściciela",
                             icon: Icons.person,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                           RoundedInputField(
                             hintText: "Wiek",
                             icon: Icons.calendar_today,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                           RoundedInputField(
                             hintText: "Waga",
                             icon: Icons.network_check,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                           RoundedInputField(
                             hintText: "Płeć",
                             icon: Icons.looks_two_outlined,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                           RoundedInputField(
                             hintText: "Rasa",
                             icon: Icons.loyalty_outlined,
                             color: Colors.white,
                             iconColor: Colors.black,
-                            verticalMargin: 4,
+                            verticalMargin: 3,
                           ),
                         ]
                       )
                     ),
-                  )
+                    )
+                  ),
                 ],
               ),
             ),
-            SizedBox(height: size.height * 0.1),
+            SizedBox(height: size.height * 0.02),
           ],
         ),
       ),
