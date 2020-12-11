@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/constants.dart';
@@ -21,8 +22,34 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSelected    = true;
   int  indexSelected = 0;
 
+  String _nameAnimal;
+  String _nameOwner;
+  double    _ageAnimal;
+  double _weightAnimal;
+  String _genderAnimal;
+  String _strainAnimal;
+
+  Map data;
+
+  addData(){
+    Map<String,dynamic> animalData = {
+      "_nameAnimal" : _nameAnimal,
+      "_nameOwner" : _nameOwner,
+      "_ageAnimal" : _ageAnimal,
+      "_weightAnimal" : _weightAnimal,
+      "_genderAnimal" : _genderAnimal,
+      "_strainAnimal" : _strainAnimal,
+      "_doctorMail": currentUserEmail,
+    };
+
+    CollectionReference collectionReference = Firestore.instance.collection('data');
+    collectionReference.add(animalData);
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
 
     Size size = MediaQuery.of(context).size;
     return AnimatedContainer(
@@ -178,12 +205,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: shadowList,
                               ),
-                              margin: EdgeInsets.only(top: size.height*0.05, bottom: size.height*0.05),
+                              margin: EdgeInsets.only(top: size.height*0.09, bottom: size.height*0.05),
+                              child: Align(
+                                child: Icon(Icons.add,
+                                size: size.aspectRatio *70,
+                                // height: size.height * 0.06,
+                                // alignment: Alignment.center,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                           onTap: () {
                             print('button clicked');
+                            addData();
                           },
                         ),
                       ),
@@ -199,6 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget> [
                           RoundedInputField(
+                            onChanged: (value) {
+                              _nameAnimal = value;
+                            },
                             hintText: categories[indexSelected]['hintText'] ?? "Imię",
                             icon: categories[indexSelected]['iconInputField'] ?? Icons.accessibility_new_rounded,
                             color: Colors.white,
@@ -206,6 +244,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             verticalMargin: 3,
                           ),
                           RoundedInputField(
+                            onChanged: (value) {
+                              _nameOwner = value;
+                            },
                             hintText: "Nazwisko właściciela",
                             icon: Icons.person,
                             color: Colors.white,
@@ -213,6 +254,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             verticalMargin: 3,
                           ),
                           RoundedInputField(
+                            onChanged: (value) {
+                             _ageAnimal = double.parse(value);
+                            },
                             hintText: "Wiek",
                             icon: Icons.calendar_today,
                             color: Colors.white,
@@ -220,6 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             verticalMargin: 3,
                           ),
                           RoundedInputField(
+                            onChanged: (value) {
+                             _weightAnimal = double.parse(value);
+                            },
                             hintText: "Waga",
                             icon: Icons.network_check,
                             color: Colors.white,
@@ -227,6 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             verticalMargin: 3,
                           ),
                           RoundedInputField(
+                            onChanged: (value) {
+                             _genderAnimal = value;
+                            },
                             hintText: "Płeć",
                             icon: Icons.looks_two_outlined,
                             color: Colors.white,
@@ -234,6 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             verticalMargin: 3,
                           ),
                           RoundedInputField(
+                            onChanged: (value) {
+                             _strainAnimal = value;
+                            },
                             hintText: "Rasa",
                             icon: Icons.loyalty_outlined,
                             color: Colors.white,
@@ -248,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SizedBox(height: size.height * 0.02),
+            SizedBox(height: size.height * 0.05),
           ],
         ),
       ),
