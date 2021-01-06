@@ -30,6 +30,7 @@ class RoundedInputField extends StatelessWidget {
       child: TextField(
         controller: fieldController,
         onChanged: onChanged,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           icon: Icon(
             icon,

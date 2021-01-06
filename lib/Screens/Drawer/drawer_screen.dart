@@ -3,6 +3,7 @@ import 'package:first_flutter_app/constants.dart';
 import 'package:first_flutter_app/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_flutter_app/Screens/PatientsList/patients_list_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -17,37 +18,21 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return Container(
       color: kDrawerColor,
       padding: EdgeInsets.only(top: 50),
-      child: Column(
-        children: [
-          Column(
-            children: [
-            SizedBox(height: size.height * 0.2),
-            Row(
-                children:[
-                FlatButton.icon(
-                    icon: Icon(Icons.add_chart, size: size.aspectRatio*50),
-                    onPressed: () {
-                      print("Pressed");
-                    },
-                    label: Text(
-                      "Dodaj diagnozę",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.aspectRatio*30
-                      ),
-                    ),
-                  ),
-                ]
-              ),
+      child: SingleChildScrollView(
+        child:Column(
+          children: [
+            Column(
+              children: [
+              SizedBox(height: size.height * 0.2),
               Row(
                   children:[
-                    FlatButton.icon(
-                      icon: Icon(Icons.logout, size: size.aspectRatio*50),
+                  FlatButton.icon(
+                      icon: Icon(Icons.add_chart, size: size.aspectRatio*50),
                       onPressed: () {
-                        context.read<AuthenticationService>().signOut();
+                        print("Pressed");
                       },
                       label: Text(
-                        "Wyloguj",
+                        "Dodaj diagnozę",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: size.aspectRatio*30
@@ -55,13 +40,56 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       ),
                     ),
                   ]
-              ),
+                ),
+                Row(
+                    children:[
+                      FlatButton.icon(
+                        icon: Icon(Icons.featured_play_list_outlined, size: size.aspectRatio*50),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PatientsListScreen();
+                              },
+                            ),
+                          );
 
-              SizedBox(height: size.height * 0.5),
-            ]
-          ),
+                        },
+                        label: Text(
+                          "Lista pacjentów",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.aspectRatio*30
+                          ),
+                        ),
+                      ),
+                    ]
+                ),
+                Row(
+                    children:[
+                      FlatButton.icon(
+                        icon: Icon(Icons.logout, size: size.aspectRatio*50),
+                        onPressed: () {
+                          context.read<AuthenticationService>().signOut();
+                        },
+                        label: Text(
+                          "Wyloguj",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.aspectRatio*30
+                          ),
+                        ),
+                      ),
+                    ]
+                ),
 
-        ],
+                SizedBox(height: size.height * 0.5),
+              ]
+            ),
+
+          ],
+        )
       )
     );
   }

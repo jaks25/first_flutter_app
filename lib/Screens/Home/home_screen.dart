@@ -40,17 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
       "_genderAnimal" : _genderAnimal,
       "_strainAnimal" : _strainAnimal,
       "_doctorMail": currentUserEmail,
+      "_speciesAnimal" : categories[indexSelected]['name'],
     };
 
-    CollectionReference collectionReference = Firestore.instance.collection('data');
+    CollectionReference collectionReference = Firestore.instance.collection('patients');
     collectionReference.add(animalData);
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     Size size = MediaQuery.of(context).size;
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)..scale(scaleFactor),
