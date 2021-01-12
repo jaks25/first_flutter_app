@@ -58,7 +58,7 @@ class _PatientDetailState extends State<PatientDetail> {
 
     Firestore.instance.collection('patients').document(patient.id).updateData(animalData).whenComplete(() {
       print("Update completed");
-      //Navigator.pop(context);
+      Navigator.pop(context);
     });
   }
 
@@ -103,8 +103,9 @@ class _PatientDetailState extends State<PatientDetail> {
               }
               updatePatient(patient);
               print(_nameAnimal);
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => PatientDetail(patient: patient)));
-              Navigator.of(context).pop();
+              //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PatientDetail(patient: patient)));
+              //Navigator.of(context).pop();
+              Navigator.pop(context);
             },
           )
         ],
@@ -156,6 +157,7 @@ class _PatientDetailState extends State<PatientDetail> {
                         onTap: () {
                           print("_nameAnimal Pressed");
                           createAlertDialog(context, 'Imię zwierzęcia', _nameAnimal, '_nameAnimal', widget.patient);
+                          GetData(widget.patient);
                         },
                         child: Card(
                           child: ListTile(

@@ -25,13 +25,17 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final firebaseUser = context.watch<User>();
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[200],
-        //    borderRadius: BorderRadius.circular(40)
-        ),
+    return SingleChildScrollView(
+        // decoration: BoxDecoration(
+        //     color: Colors.grey[200],
+        // //    borderRadius: BorderRadius.circular(40)
+        // ),
       child: Column(
         children: <Widget>[
+          AppBar(
+            title: Text("Lista Pacjentów"),
+            backgroundColor: kHomeBox,
+          ),
           // SizedBox(height: size.height * 0.05),
           // TextField(
           //   controller: _searchController,
@@ -53,6 +57,7 @@ class _BodyState extends State<Body> {
           //         //PatientDetail(context, _allResults[index]));
           //   )
             StreamBuilder(
+
                 stream: FirebaseFirestore.instance.collection('patients').where("_doctorMail", isEqualTo: currentUserEmail).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                   if (snapshot.hasError){
@@ -70,6 +75,7 @@ class _BodyState extends State<Body> {
 
                   return ListView(
                       scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       children: snapshot.data.documents.map((DocumentSnapshot document){
                         return Card(

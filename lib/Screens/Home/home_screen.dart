@@ -24,12 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _nameAnimal;
   String _nameOwner;
-  double    _ageAnimal;
+  double _ageAnimal;
   double _weightAnimal;
   String _genderAnimal;
   String _strainAnimal;
 
   Map data;
+
+  final nameAnimalController   = TextEditingController();
+  final nameOwnerController    = TextEditingController();
+  final ageAnimalController    = TextEditingController();
+  final weightAnimalController = TextEditingController();
+  final genderAnimalController = TextEditingController();
+  final strainAnimalController = TextEditingController();
 
   addData(){
     Map<String,dynamic> animalData = {
@@ -45,6 +52,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
     CollectionReference collectionReference = Firestore.instance.collection('patients');
     collectionReference.add(animalData);
+  }
+
+  clearForm(){
+    this.setState(() {
+      nameAnimalController.clear();
+      nameOwnerController.clear();
+      ageAnimalController.clear();
+      weightAnimalController.clear();
+      genderAnimalController.clear();
+      strainAnimalController.clear();
+    });
+  }
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(context: context, builder: (context) {
+      Future.delayed(Duration(seconds: 2), (){
+        Navigator.of(context).pop(true);
+        clearForm();
+      });
+      return AlertDialog(
+        title: Text("Pacjent został dodany",
+          textAlign: TextAlign.center,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(40)),
+        ),
+        backgroundColor: kHomeBox,
+      );
+    });
   }
 
   @override
@@ -172,6 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                     children: <Widget> [
                       Expanded(
+                        flex: 2,
                       child: Stack(
                       children: [
                         Container(
@@ -180,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: shadowList,
                           ),
-                          margin: EdgeInsets.only(top: size.height*0.0001, bottom: size.height*0.0001),
+                          margin: EdgeInsets.only(top: size.height*0.001, bottom: size.height*0.001),
                         ),
                         Align(
                           child: Image.asset(categories[indexSelected]['picturePath'],
@@ -203,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: shadowList,
                               ),
-                              margin: EdgeInsets.only(top: size.height*0.09, bottom: size.height*0.05),
+                              margin: EdgeInsets.only(top: size.height*0.02, bottom: size.height*0.01),
                               child: Align(
                                 child: Icon(Icons.add,
                                 size: size.aspectRatio *70,
@@ -217,6 +254,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             print('button clicked');
                             addData();
+                            createAlertDialog(context);
+                            clearForm();
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: kHomeBox,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: shadowList,
+                                ),
+                                margin: EdgeInsets.only(top: size.height*0.01, bottom: size.height*0.02),
+                                child: Align(
+                                  child: Icon(Icons.cleaning_services_rounded,
+                                    size: size.aspectRatio *70,
+                                    // height: size.height * 0.06,
+                                    // alignment: Alignment.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            print('button clicked');
+                            clearForm();
                           },
                         ),
                       ),
@@ -240,6 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: nameAnimalController,
                           ),
                           RoundedInputField(
                             onChanged: (value) {
@@ -250,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: nameOwnerController,
                           ),
                           RoundedInputField(
                             onChanged: (value) {
@@ -260,6 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: ageAnimalController,
                           ),
                           RoundedInputField(
                             onChanged: (value) {
@@ -270,6 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: weightAnimalController,
                           ),
                           RoundedInputField(
                             onChanged: (value) {
@@ -280,6 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: genderAnimalController,
                           ),
                           RoundedInputField(
                             onChanged: (value) {
@@ -290,6 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             iconColor: Colors.black,
                             verticalMargin: 3,
+                            fieldController: strainAnimalController,
                           ),
                         ]
                       )

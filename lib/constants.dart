@@ -31,3 +31,10 @@ List<Map> categories = [
   {'name': 'Koń', 'iconPath': 'assets/images/horse.png', 'picturePath': 'assets/images/upgrade.png'},
   {'name': 'Krowa', 'iconPath': 'assets/images/cow.png', 'picturePath': 'assets/images/upgrade.png'},
 ];
+
+List<Map> symptoms = [
+  {
+    'name': 'Biegunka',
+    'symbol': 'B'
+  }
+];
