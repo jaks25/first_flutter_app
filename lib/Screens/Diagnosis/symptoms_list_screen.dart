@@ -1,6 +1,7 @@
 import 'package:first_flutter_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/symptoms/symptoms.dart';
+import 'package:first_flutter_app/Screens/Diagnosis/symptom_test_screen.dart';
 
 class SymptomsListScreen extends StatefulWidget {
   @override
@@ -31,7 +32,18 @@ class _SymptomsListScreenState extends  State<SymptomsListScreen> {
                               child: Card(
                                   color: kHomeBox,
                                   child: ListTile(
-                                    title: Text(symptomsName[index]['name']),)
+                                    title: Text(symptomsName[index]['name']),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return SymptomTestScreen(symptomsName[index]['code'].toString());
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  )
                               )
                           )
                         ]

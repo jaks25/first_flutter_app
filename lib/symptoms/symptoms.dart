@@ -17,18 +17,6 @@ List<Map> symptomsName =[
 List<Map> symptomTests = [
   {
     "symptom": 		  "B",
-    "id":			      1,
-    "description": 	"Biegunka",
-    "task":			    "",
-    "optionA":      "",
-    "optionB":		  "",
-    "optionANode":	"",
-    "optionBNode":	"",
-    "step": 		    "",
-    "parent": 		  1
-  },
-  {
-    "symptom": 		  "B",
     "id":			      2,
     "description": 	"Biegunka",
     "task":			    "",
@@ -105,5 +93,18 @@ List<Map> symptomTests = [
     "optionBNode":	"",
     "result": 		  "",
     "parent": 		  6,
+  },
+  {
+    "symptom": 		  "C",
+    "id":			      1,
+    "description": 	"Zapalenie",
+    "task":			    "Prześwietl.",
+    "question":		  "",
+    "optionA":		  "",
+    "optionB":		  "",
+    "optionANode":	"",
+    "optionBNode":	"",
+    "result": 		  "",
+    "parent": 		  1,
   }
 ];
