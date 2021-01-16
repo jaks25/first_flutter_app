@@ -40,7 +40,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return SymptomsListScreen();
+                                return SymptomsListScreen(null);
                               },
                             ),
                           );

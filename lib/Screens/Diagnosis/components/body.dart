@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/Screens/Diagnosis/symptoms_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,7 +56,8 @@ class _BodyState extends State<Body> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: snapshot.data.documents.map((DocumentSnapshot document){
-                      return Card(
+                      return InkWell(
+                          child: Card(
                               color: kHomeBox,
                               child: Row(
                                   children: [
@@ -63,7 +65,6 @@ class _BodyState extends State<Body> {
                                     child: ListTile(
                                       title: Text("Właściciel: " + document.data()['_nameOwner'].toString()),
                                       subtitle: Text("Imię zwierzęcia: " + document.data()['_nameAnimal'].toString()),
-                                      onTap: () => {}
                                     )
                                   ),
                                   Expanded(
@@ -72,9 +73,21 @@ class _BodyState extends State<Body> {
                                   height: size.height * 0.055,
                                   width:  size.width * 0.055,)
                                   ),
-                                ]
-                              )
-                          );
+                                ],
+                              ),
+                          ),
+                          onTap: ()  {
+                            print("pressed");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return SymptomsListScreen(document);;
+                                },
+                              ),
+                            );
+                          }
+                      );
                     }).toList());
               },
             ),

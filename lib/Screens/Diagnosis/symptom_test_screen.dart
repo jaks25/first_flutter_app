@@ -1,25 +1,37 @@
 import 'dart:convert';
-
+import 'package:first_flutter_app/components/rounded_button.dart';
 import 'package:first_flutter_app/constants.dart';
+import 'package:first_flutter_app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/symptoms/symptoms.dart';
 import 'package:first_flutter_app/Screens/Diagnosis/symptoms_list_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SymptomTestScreen extends StatefulWidget {
 
   final String symptomCode;
+  DocumentSnapshot patient;
 
-  SymptomTestScreen(this.symptomCode);
+  SymptomTestScreen(this.symptomCode, this.patient);
   @override
   _SymptomTestScreenState createState() => _SymptomTestScreenState(symptomCode);
+}
+
+class Option {
+  String taskOrQuestion;
+  String optionText;
+  String optionNode;
+  Option({this.optionText, this.optionNode, this.taskOrQuestion});
 }
 
 class _SymptomTestScreenState extends  State<SymptomTestScreen> {
   List<Map> mydata = [];
   final String symptomCode;
-  int iterator = 2;
+  int iterator = 1;
   bool buttonVisible = true;
+
+  Map<String,String> patientDiagnoseSteps = {};
 
   _SymptomTestScreenState(this.symptomCode);
 
@@ -32,37 +44,131 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
     }
   }
 
-  void nextStep(String id){
-    for (int i = 0; i < mydata.length; i++)
+  addDiagnose(){
+    CollectionReference collectionReference = Firestore.instance.collection('diagnoses');
+    collectionReference.add(patientDiagnoseSteps);
+  }
+
+  void createDiagnose(Option chosenOption){
+    Map<String,String> step = {};
+    patientDiagnoseSteps.putIfAbsent(chosenOption.taskOrQuestion, () => chosenOption.optionText);
+  }
+
+  createAlertDialog(BuildContext context, String textField) {
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text(textField),
+        actions: <Widget>[
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('Ok'),
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(29),
+            ),
+            color: kHomeBox,
+            onPressed: () {
+              print(patientDiagnoseSteps);
+              addDiagnose();
+              Navigator.pop(context);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return SymptomsListScreen();
+              //     },
+              //   ),
+              // );
+            },
+          )
+        ],
+      );
+
+    });
+  }
+
+  String takeTaskOrQuestion(int id){
+    print("przyszło" + id.toString());
+    for (int i = 0; i < mydata.length; i++) {
       if (mydata[i]['id'] == id){
+        print('tutaj' + mydata[i]['id'].toString());
+        if ( mydata[i]['question'] == '' ) {
+          return mydata[i]['task'];
+        }else {
+          return mydata[i]['question'];
+        }
+      }
+    }
+    return "Spróbuj jeszcze raz";
+  }
+
+
+  Option takeOption(int id, String option) {
+    Option outputOption = Option();
+    for (int i = 0; i < mydata.length; i++) {
+      if (mydata[i]['id'] == id){
+        if (option == 'optionA'){
+          outputOption.optionText = mydata[i]['optionA'];
+          outputOption.optionNode = mydata[i]['optionANode'];
+          if ( mydata[i]['question'] == '' ) {
+            outputOption.taskOrQuestion = mydata[i]['task'];
+          }else {
+            outputOption.taskOrQuestion = mydata[i]['question'];
+          }
+          return outputOption;
+        }else if (option == 'optionB') {
+          outputOption.optionText = mydata[i]['optionB'];
+          outputOption.optionNode = mydata[i]['optionBNode'];
+          if ( mydata[i]['question'] == '' ) {
+            outputOption.taskOrQuestion = mydata[i]['task'];
+          }else {
+            outputOption.taskOrQuestion = mydata[i]['question'];
+          }
+          return outputOption;
+        }
+      }
+    }
+    outputOption.optionText = 'X';
+    outputOption.optionNode = 'X';
+    return outputOption;
+  }
+
+  void nextStep(int id){
+    print("NextStep: " + id.toString());
+    for (int i = 0; i < mydata.length; i++) {
+      print(mydata[i]['id']);
+      if (mydata[i]['id'] == id) {
         setState(() {
-          iterator++;
+          print("seting:" + id.toString());
+          iterator = id;
         });
         break;
       }
+    }
   }
 
-  void checkIfLast(String id){
-    for (int i = 0; i < mydata.length; i++)
+  void checkIfLast(int id){
+    for (int i = 0; i < mydata.length; i++) {
       if (mydata[i]['id'] == id
           && mydata[i]['optionANode'] == ''
-          && mydata[i]['optionBNode'] == ''){
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return SymptomsListScreen();
-            },
-          ),
-        );
+          && mydata[i]['optionBNode'] == '') {
+        createAlertDialog(context, mydata[i]['task']);
+        setState(() {
+          buttonVisible = false;
+        });
         break;
-      }else{
-        nextStep(id);
       }
+    }
+    nextStep(id);
   }
 
-  Widget choiceButton(String k){
-    return Padding(
+  Widget choiceButton(int id, String option){
+    Option buttonOption = Option();
+    buttonOption = takeOption(id, option);
+
+    return Visibility(
+        visible: buttonVisible,
+        child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 10.0,
             horizontal: 20.0,
@@ -70,10 +176,12 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
           child: MaterialButton(
             onPressed: ()  {
               print("Pressed");
-              nextStep(k);
+              checkIfLast(int.parse(buttonOption.optionNode));
+              createDiagnose(buttonOption);
+              print(iterator);
             },
             child: Text(
-              mydata[iterator]['question'] == '' ? mydata[iterator]['task'] : mydata[iterator]['question'],
+              buttonOption.optionText,
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -86,13 +194,16 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
             shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
           ),
-        );
+        )
+    );
   }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     getData();
     print(mydata);
+    patientDiagnoseSteps.putIfAbsent('_doctorMail', () => currentUserEmail);
+    patientDiagnoseSteps.putIfAbsent('_patientId', () => widget.patient.id.toString());
     return  Scaffold(
       body: Column(
         children: <Widget>[
@@ -100,8 +211,8 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
             flex: 3,
             child: Container(
               padding: EdgeInsets.all(15.0),
-              alignment: Alignment.bottomLeft,
-              child: Text( mydata[iterator]['question'] == '' ? mydata[iterator]['task'] : mydata[iterator]['question'],
+              alignment: Alignment.center,
+              child: Text( takeTaskOrQuestion(iterator),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -110,19 +221,16 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
           ),
           Expanded(
             flex: 6,
-            child: AbsorbPointer(
-              absorbing: buttonVisible,
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    choiceButton(mydata[iterator]['optionANode']),
-                    choiceButton(mydata[iterator]['optionBNode']),
+                    choiceButton(iterator, 'optionA'),
+                    choiceButton(iterator, 'optionB'),
                   ],
                 ),
               ),
             ),
-          )
         ],
       ),
     );

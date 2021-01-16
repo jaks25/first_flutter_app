@@ -78,13 +78,15 @@ class _BodyState extends State<Body> {
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       children: snapshot.data.documents.map((DocumentSnapshot document){
-                        return Card(
-                            color: kHomeBox,
-                            child: ListTile(
-                            title: Text("Właściciel: " + document.data()['_nameOwner'].toString()),
-                            subtitle: Text("Imię zwierzęcia: " + document.data()['_nameAnimal'].toString()),
-                            onTap: () => navigateToDetail(document, context)
-                            )
+                        return InkWell(
+                            child: Card(
+                              color: kHomeBox,
+                              child: ListTile(
+                              title: Text("Właściciel: " + document.data()['_nameOwner'].toString()),
+                              subtitle: Text("Imię zwierzęcia: " + document.data()['_nameAnimal'].toString()),
+                              )
+                          ),
+                          onTap: () => navigateToDetail(document, context)
                         );
                       }).toList());
                 },
