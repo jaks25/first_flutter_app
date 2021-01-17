@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/Screens/DiagnosisList/diagnosis_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/constants.dart';
 import 'package:first_flutter_app/authentication_service.dart';
@@ -99,6 +100,31 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         },
                         label: Text(
                           "Lista pacjentów",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.aspectRatio*30
+                          ),
+                        ),
+                      ),
+                    ]
+                ),
+                Row(
+                    children:[
+                      FlatButton.icon(
+                        icon: Icon(Icons.all_inbox_rounded, size: size.aspectRatio*50),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return DiagnosisListScreen();
+                              },
+                            ),
+                          );
+
+                        },
+                        label: Text(
+                          "Postawione diagnozy",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: size.aspectRatio*30

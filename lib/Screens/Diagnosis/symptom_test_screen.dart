@@ -204,6 +204,8 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
     print(mydata);
     patientDiagnoseSteps.putIfAbsent('_doctorMail', () => currentUserEmail);
     patientDiagnoseSteps.putIfAbsent('_patientId', () => widget.patient.id.toString());
+    patientDiagnoseSteps.putIfAbsent('_disease', () => mydata[0]['description'].toString());
+    patientDiagnoseSteps.putIfAbsent('_symptom', () => mydata[0]['symptom'].toString());
     return  Scaffold(
       body: Column(
         children: <Widget>[

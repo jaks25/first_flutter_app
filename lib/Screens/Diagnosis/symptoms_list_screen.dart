@@ -40,14 +40,18 @@ class _SymptomsListScreenState extends  State<SymptomsListScreen> {
                                   child: ListTile(
                                     title: Text(symptomsName[index]['name']),
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return SymptomTestScreen(symptomsName[index]['code'].toString(), document);
-                                        },
-                                      ),
-                                    );
+                                      if (document != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return SymptomTestScreen(
+                                                  symptomsName[index]['code']
+                                                      .toString(), document);
+                                            },
+                                          ),
+                                        );
+                                      }
                                   },
                                   )
                               )

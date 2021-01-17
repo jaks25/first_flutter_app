@@ -33,7 +33,7 @@ class _BodyState extends State<Body> {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text("Lista Pacjentów"),
+            title: Text("Lista pacjentów"),
             backgroundColor: kHomeBox,
           ),
           // SizedBox(height: size.height * 0.05),
