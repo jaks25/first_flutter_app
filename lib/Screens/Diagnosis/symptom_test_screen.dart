@@ -31,6 +31,7 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
   int iterator = 1;
   bool buttonVisible = true;
 
+  Map<String,String> patientDiagnose = {};
   Map<String,String> patientDiagnoseSteps = {};
 
   _SymptomTestScreenState(this.symptomCode);
@@ -46,7 +47,13 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
 
   addDiagnose(){
     CollectionReference collectionReference = Firestore.instance.collection('diagnoses');
-    collectionReference.add(patientDiagnoseSteps);
+    collectionReference.add(patientDiagnose).then((value){
+      CollectionReference collectionReference2 = Firestore.instance.collection('diagnosesSteps');
+      patientDiagnoseSteps.putIfAbsent('diagnoseId', () => value.id.toString());
+      collectionReference2.add(patientDiagnoseSteps);
+    });
+    //Firestore.instance.collection('diagnoses').document(collectionReference.id).collection('steps').setData({patientDiagnoseSteps});
+
   }
 
   void createDiagnose(Option chosenOption){
@@ -202,10 +209,12 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
     Size size = MediaQuery.of(context).size;
     getData();
     print(mydata);
-    patientDiagnoseSteps.putIfAbsent('_doctorMail', () => currentUserEmail);
-    patientDiagnoseSteps.putIfAbsent('_patientId', () => widget.patient.id.toString());
-    patientDiagnoseSteps.putIfAbsent('_disease', () => mydata[0]['description'].toString());
-    patientDiagnoseSteps.putIfAbsent('_symptom', () => mydata[0]['symptom'].toString());
+    patientDiagnose.putIfAbsent('_doctorMail', () => currentUserEmail);
+    patientDiagnose.putIfAbsent('_nameOwner', () => widget.patient.data()['_nameOwner'].toString());
+    patientDiagnose.putIfAbsent('_nameAnimal', () => widget.patient.data()['_nameAnimal'].toString());
+    patientDiagnose.putIfAbsent('_patientId', () => widget.patient.id.toString());
+    patientDiagnose.putIfAbsent('_disease', () => mydata[0]['description'].toString());
+    patientDiagnose.putIfAbsent('_symptom', () => mydata[0]['symptom'].toString());
     return  Scaffold(
       body: Column(
         children: <Widget>[
