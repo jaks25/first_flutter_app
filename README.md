@@ -1,6 +1,7 @@
 # first_flutter_app
 
-A new Flutter application.
+A new Vet App.
+WPAM project.
 
 ## Getting Started
 
