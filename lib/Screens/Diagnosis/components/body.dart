@@ -1,7 +1,5 @@
 import 'package:first_flutter_app/Screens/Diagnosis/symptoms_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_flutter_app/globals.dart';
 import 'package:first_flutter_app/constants.dart';
@@ -26,7 +24,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final firebaseUser = context.watch<User>();
     return SingleChildScrollView(
       child: Column(
           children: <Widget>[

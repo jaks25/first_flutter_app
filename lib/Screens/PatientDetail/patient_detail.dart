@@ -2,11 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_flutter_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:first_flutter_app/Screens/PatientsList/components/body.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:first_flutter_app/components/rounded_button.dart';
-import 'package:first_flutter_app/components/rounded_input_field.dart';
 
 class PatientDetail extends StatefulWidget {
 
@@ -31,13 +27,6 @@ class _PatientDetailState extends State<PatientDetail> {
   String _speciesAnimal;
 
   void PatientDelete(patient) async {
-    // DocumentReference documentReference = await Firestore.instance.collection('patients').document();
-    // CollectionReference collectionReference = Firestore.instance.collection('patients');
-    // collectionReference.document(patient.id);
-    // documentReference.delete().whenComplete(() {
-    //   print("Delete completed");
-    //   Navigator.pop(context);
-    // });
     await Firestore.instance.collection('patients').document(patient.id).delete().whenComplete(() {
       print("Delete completed");
       Navigator.pop(context);
@@ -100,11 +89,12 @@ class _PatientDetailState extends State<PatientDetail> {
               //updatePatient(patient);
               if (fieldName == '_nameAnimal') {
                 _nameAnimal = currentValue.toString();
+              }else if (fieldName == '_nameOwner'){
+                _nameOwner = currentValue.toString();
+              }else if (fieldName == '_weightAnimal'){
+                _weightAnimal = double.parse(currentValue);
               }
               updatePatient(patient);
-              print(_nameAnimal);
-              //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PatientDetail(patient: patient)));
-              //Navigator.of(context).pop();
               Navigator.pop(context);
             },
           )
@@ -147,12 +137,12 @@ class _PatientDetailState extends State<PatientDetail> {
                 color: kHomeBox,
                 child: Column(
                   children: [
-                    Card(
-                          child: ListTile(
-                            title: Text(widget.patient.id.toString()),
-                            subtitle: Text("Key"),
-                          )
-                    ),
+                    // Card(
+                    //       child: ListTile(
+                    //         title: Text(widget.patient.id.toString()),
+                    //         subtitle: Text("Key"),
+                    //       )
+                    // ),
                     InkWell(
                         onTap: () {
                           print("_nameAnimal Pressed");
@@ -166,22 +156,40 @@ class _PatientDetailState extends State<PatientDetail> {
                           )
                         )
                     ),
-                    Card(
-                      child: ListTile(
-                        title: Text(_nameOwner),
-                        subtitle: Text("Właściciel"),
+                    InkWell(
+                      onTap: () {
+                        createAlertDialog(context, 'Właściciel', _nameOwner, '_nameOwner', widget.patient);
+                        GetData(widget.patient);
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text(_nameOwner),
+                          subtitle: Text("Właściciel"),
+                        )
                       )
+                    ),
+                    Card(
+                        child: ListTile(
+                          title: Text(_strainAnimal),
+                          subtitle: Text("Rasa"),
+                        )
                     ),
                     Card(
                       child: ListTile(
                         title: Text(_genderAnimal),
-                        subtitle: Text("Gatunek"),
+                        subtitle: Text("Płeć"),
                       )
                     ),
-                    Card(
-                      child: ListTile(
-                        title: Text(_weightAnimal.toString() + "kg"),
-                        subtitle: Text("Waga"),
+                    InkWell(
+                      onTap: () {
+                        createAlertDialog(context, 'Waga', _weightAnimal, '_weightAnimal', widget.patient);
+                        GetData(widget.patient);
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text(_weightAnimal.toString() + "kg"),
+                          subtitle: Text("Waga"),
+                        )
                       )
                     ),
                   ]

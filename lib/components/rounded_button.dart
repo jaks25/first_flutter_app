@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;

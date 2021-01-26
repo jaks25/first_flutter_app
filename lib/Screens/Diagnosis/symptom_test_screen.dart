@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'package:first_flutter_app/components/rounded_button.dart';
 import 'package:first_flutter_app/constants.dart';
 import 'package:first_flutter_app/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/symptoms/symptoms.dart';
-import 'package:first_flutter_app/Screens/Diagnosis/symptoms_list_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SymptomTestScreen extends StatefulWidget {
@@ -33,6 +30,7 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
 
   Map<String,String> patientDiagnose = {};
   Map<String,String> patientDiagnoseSteps = {};
+  Map<String,String> patientDiagnoseStep = {};
 
   _SymptomTestScreenState(this.symptomCode);
 
@@ -49,11 +47,17 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
     CollectionReference collectionReference = Firestore.instance.collection('diagnoses');
     collectionReference.add(patientDiagnose).then((value){
       CollectionReference collectionReference2 = Firestore.instance.collection('diagnosesSteps');
-      patientDiagnoseSteps.putIfAbsent('diagnoseId', () => value.id.toString());
-      collectionReference2.add(patientDiagnoseSteps);
+      int iterator = 0;
+      for (var i in patientDiagnoseSteps.keys){
+        collectionReference2.add({
+          'timeStamp': FieldValue.serverTimestamp(),
+          'diagnoseId': value.id.toString(),
+          'taskOrQuestion': i.toString(),
+          'choice' : patientDiagnoseSteps[i].toString(),
+        });
+        iterator++;
+      }
     });
-    //Firestore.instance.collection('diagnoses').document(collectionReference.id).collection('steps').setData({patientDiagnoseSteps});
-
   }
 
   void createDiagnose(Option chosenOption){
@@ -64,7 +68,9 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
   createAlertDialog(BuildContext context, String textField) {
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
-        title: Text(textField),
+        title: Text(
+            textField,
+        textAlign: TextAlign.center,),
         actions: <Widget>[
           MaterialButton(
             elevation: 5.0,
@@ -78,14 +84,6 @@ class _SymptomTestScreenState extends  State<SymptomTestScreen> {
               print(patientDiagnoseSteps);
               addDiagnose();
               Navigator.pop(context);
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return SymptomsListScreen();
-              //     },
-              //   ),
-              // );
             },
           )
         ],

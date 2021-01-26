@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/constants.dart';
-import 'package:first_flutter_app/Screens/Home/components/body.dart';
 import 'package:first_flutter_app/components/rounded_input_field.dart';
-import 'package:first_flutter_app/Screens/Home/components/app_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:first_flutter_app/globals.dart';
 
@@ -225,7 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             width:  size.width * 0.29,
                           ),
                           alignment: Alignment(-0.4, -size.height * 0.0013),
-                          //left: size.width * 0.03,
                         ),
                       ],
                     ),
@@ -244,8 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Align(
                                 child: Icon(Icons.add,
                                 size: size.aspectRatio *70,
-                                // height: size.height * 0.06,
-                                // alignment: Alignment.center,
                                 ),
                               ),
                             ),
@@ -273,8 +268,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Align(
                                   child: Icon(Icons.cleaning_services_rounded,
                                     size: size.aspectRatio *70,
-                                    // height: size.height * 0.06,
-                                    // alignment: Alignment.center,
                                   ),
                                 ),
                               ),

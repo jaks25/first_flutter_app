@@ -1,6 +1,4 @@
-import 'package:first_flutter_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:first_flutter_app/Screens/Home/home_screen.dart';
 
 class Body extends State{
   Body(this.context);

@@ -1,19 +1,14 @@
-import 'dart:io';
 import 'package:first_flutter_app/Screens/Welcome/welcome_screen.dart';
 import 'package:first_flutter_app/Screens/Signup/signup_screen.dart';
-import 'package:first_flutter_app/Screens/Welcome/welcome_screen.dart';
 import 'package:first_flutter_app/authentication_service.dart';
 import 'package:first_flutter_app/components/rounded_button.dart';
 import 'package:first_flutter_app/components/rounded_passwordfield.dart';
-import 'package:first_flutter_app/components/text_filed_container.dart';
-import 'package:first_flutter_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/Screens/Login/components/background.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:first_flutter_app/components/rounded_input_field.dart';
 import 'package:first_flutter_app/components/already_have_an_account_check.dart';
-import 'package:first_flutter_app/Screens/Signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -47,9 +42,6 @@ class Body extends StatelessWidget {
               icon: SvgPicture.network("https://www.svgrepo.com/show/295861/veterinarian.svg",
                 height: size.height * 1.5,),
               iconSize: size.height * 0.15,
-              //SvgPicture.asset("assets/icons/dog_with_owner_icon.svg",
-              //  height: size.height * 0.9,
-              //),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -78,8 +70,8 @@ class Body extends StatelessWidget {
                 textColor: Colors.black,
                 press: () {
                   context.read<AuthenticationService>().signIn(
-                    email: _email/*emailController.text.trim()"kubag0125@gmail.com"*/,
-                    password: _password/*passwordController.text.trim()"qwert"*/,
+                    email: _email,
+                    password: _password,
 
                   );
                 },

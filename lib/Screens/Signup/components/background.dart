@@ -37,14 +37,6 @@ class Background extends StatelessWidget {
               width: size.width * 0.65,
             ),
           ),
-          //Positioned(
-          //  bottom: 0,
-          //  right: 0,
-          //  child: Image.asset(
-          //    "assets/images/signup_right_bottom.png",
-          //    width: size.width * 0.30,
-          //  ),
-          //),
           Positioned(
             bottom: 0,
             left: 0,

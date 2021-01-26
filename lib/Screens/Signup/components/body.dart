@@ -17,6 +17,8 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    String _email;
+    String _password;
     return Background(
         child: SingleChildScrollView(
           child: Column(
@@ -34,19 +36,33 @@ class Body extends StatelessWidget {
               RoundedInputField(
                 fieldController: emailController,
                 hintText: "Adres e-mail",
-                onChanged: (value) {},
+                onChanged: (value) {
+                  _email = value;
+                },
               ),
               RoundedPasswordField(
                 fieldController: passwordController,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  _password = value;
+                },
               ),
               RoundedButton(
                   text: "Zarejestruj się",
                   press: () {
                     context.read<AuthenticationService>().signUp(
-                      email: emailController.text.trim()/*"kubag0125@gmail.com"*/,
-                      password: passwordController.text.trim()/*"qwert"*/,
+                      email: _email,
+                      password: _password,
                     );
+                    Future.delayed(Duration(seconds: 1)).then((_){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginScreen();
+                          },
+                        ),
+                      );
+                    });
                   },
               ),
               SizedBox(height: size.height * 0.02),

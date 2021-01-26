@@ -33,14 +33,6 @@ class Background extends StatelessWidget {
               width: size.width * 0.5,
             ),
           ),
-          //Positioned(
-          //  bottom: 0,
-          //  right: 0,
-          //  child: Image.asset(
-          //    "assets/images/right_bottom_login_2.png",
-          //    width: size.width * 0.5,
-          //  ),
-          //),
           child,
         ],
     ),

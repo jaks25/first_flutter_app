@@ -15,6 +15,15 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   TextEditingController _searchController = TextEditingController();
 
+  String getSpeciesIcon(String species){
+    for (var i = 0; i < categories.length; i++){
+      if (categories[i]['name'] == species) {
+        return categories[i]['iconPath'];
+      }
+    }
+    return null;
+  }
+
 
   navigateToDetail(DocumentSnapshot patient, context){
 
@@ -26,36 +35,12 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     final firebaseUser = context.watch<User>();
     return SingleChildScrollView(
-        // decoration: BoxDecoration(
-        //     color: Colors.grey[200],
-        // //    borderRadius: BorderRadius.circular(40)
-        // ),
       child: Column(
         children: <Widget>[
           AppBar(
             title: Text("Lista pacjentów"),
             backgroundColor: kHomeBox,
           ),
-          // SizedBox(height: size.height * 0.05),
-          // TextField(
-          //   controller: _searchController,
-          //   decoration: InputDecoration(
-          //     prefixIcon: Icon(Icons.search)
-          //   ),
-          // ),
-          // Expanded(
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.vertical,
-          //     itemCount: _allResults.length,
-          //     itemBuilder: (BuildContext context, int index) {
-          //       return ListTile(
-          //           title: Text("Właściciel: " + _allResults[index]['_nameOwner']),
-          //           //subtitle: Text("Imię zwierzęcia: " + _allResults[index]['_nameAnimal'].toString()),
-          //           //onTap: () => navigateToDetail(_allResults[index], context)
-          //       );
-          //     },
-          //         //PatientDetail(context, _allResults[index]));
-          //   )
             StreamBuilder(
 
                 stream: FirebaseFirestore.instance.collection('patients').where("_doctorMail", isEqualTo: currentUserEmail).snapshots(),
@@ -81,9 +66,21 @@ class _BodyState extends State<Body> {
                         return InkWell(
                             child: Card(
                               color: kHomeBox,
-                              child: ListTile(
-                              title: Text("Właściciel: " + document.data()['_nameOwner'].toString()),
-                              subtitle: Text("Imię zwierzęcia: " + document.data()['_nameAnimal'].toString()),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ListTile(
+                                    title: Text("Właściciel: " + document.data()['_nameOwner'].toString()),
+                                    subtitle: Text("Imię zwierzęcia: " + document.data()['_nameAnimal'].toString()),
+                                    )
+                                  ),
+                                  Expanded(
+                                      child: Image.asset(
+                                        getSpeciesIcon(document.data()['_speciesAnimal']),
+                                        height: size.height * 0.055,
+                                        width:  size.width * 0.055,)
+                                  ),
+                                ],
                               )
                           ),
                           onTap: () => navigateToDetail(document, context)
@@ -91,7 +88,6 @@ class _BodyState extends State<Body> {
                       }).toList());
                 },
               ),
-
         ]
       ),
     );

@@ -50,8 +50,6 @@ class _BodyState extends State<Body> {
                 shrinkWrap: true,
                 children: snapshot.data.documents.map((DocumentSnapshot document) {
                   Stream<DocumentSnapshot> patient;
-                  Future<DocumentSnapshot> patientStream;
-                  //print(document.data()['_patientId'].toString());
                   patient =  FirebaseFirestore.instance.collection('patients').document(document.data()['_patientId']).snapshots();
                   patient.map((DocumentSnapshot patientSnapshot){
                     patientSnap = patientSnapshot;
@@ -61,7 +59,7 @@ class _BodyState extends State<Body> {
                       color: kHomeBox,
                       child: ListTile(
                         title: Text("Choroba: " + document.data()['_disease']),
-                        subtitle: Text("Pacjent: " + document.data()['_nameOwner'].toString()),
+                        subtitle: Text("Pacjent: " + document.data()['_nameAnimal'].toString() + " Właściciel: "+ document.data()['_nameOwner'].toString()),
 
                       ),
                     ),
